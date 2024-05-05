@@ -539,14 +539,13 @@ module.exports = {
                     // final strings for embed
                     let accountInformationString = `User ID: \`${id}\` \nAccount Age: \`${accountAgeShow}\` \nAccounted Created: <t:${accountCreated}:f> \nBadge Count: \`${badgeCount}\` \nFriends: \`${info.friendCount}\` \nFollowing: \`${info.followingCount}\` \nPast Usernames: ${pastUsernames}`;
                     let britishArmyBackgroundCheckString = `${sandhurstAlerts} \nSandhurst Military Academy Join Date: ${finalSandhurstJoinDate} \nJoined Sandhurst: ${accountCreatedRelative}`;
-                    let amendmentsString = `${amendments}`;
                     let altRatingString = `This user scored ${chronicle.toFixed(2)}/10.00`;
 
                     let finishedTime = Math.round(new Date().getTime() / 1000);
                     let totalTime = (finishedTime - timeNow);
 
                     // show recommendation or not
-                    let desc = `### Account Information \n${accountInformationString}\n### Account Background Check \n${alerts}\n### British Army Background Check \n${britishArmyBackgroundCheckString}\n### Amendments \n${amendmentsString}\n### Alt Probability: ${altRating} \n${altRatingString}`;
+                    let desc = `### Account Information \n${accountInformationString}\n### Account Background Check \n${alerts}\n### British Army Background Check \n${britishArmyBackgroundCheckString}\n### Amendments \n${amendments}\n### Alt Probability: ${altRating} \n${altRatingString}`;
                     if (recommendation.includes('incomplete')) {
                         desc += `\n### ${recommendation}`;
                     };
