@@ -103,9 +103,12 @@ module.exports = {
                 noblox.getPlayerInfo(parseInt(id)).then(async function(info) {
 
                     if (info.isBanned) {
-                        command_interaction.editReply(`User is currently banned from Roblox. Unable to Background Check.`)
+                        command_interaction.editReply({
+                            content: `User is currently banned from Roblox. Unable to Background Check.`,
+                            embeds: [],
+                        })
                         return;
-                    }
+                    };
 
                     // placeholders
                     let alerts = '```diff\n';
@@ -409,7 +412,7 @@ module.exports = {
                     alerts += groupMessage;
                     chronicle += userGroupsLength === 1 ? 3.5 : userGroupsLength > 1 && userGroupsLength <= 5 ? dataFile.ChronicleWeights['Less5Groups'] : dataFile.ChronicleWeights['NoGroups'];
 
-                    debug('Established user group count')
+                    debug('Established user group count');
 
                     // handle ba background checks
                     let finalSandhurstJoinDate;
@@ -435,7 +438,7 @@ module.exports = {
                             finalSandhurstJoinDate = '`Before March 2021 (3+ Years Ago)`';
                         } else {
                             finalSandhurstJoinDate = `<t:${sandhurstJoinDateUnix}:D> (<t:${sandhurstJoinDateUnix}:R>)`;
-                        }
+                        };
 
                         // get the days since they joined sandhurst
                         let accountCreateSandhurstJoinRelationMS = sandhurstJoinDateUnix - accountCreated;
@@ -450,7 +453,7 @@ module.exports = {
                         } else if (accountCreateSandhurstJoinRelationDays > 1 && accountCreateSandhurstJoinRelationDays <= 30) {
                             sandhurstAlerts += `${alertPrefix} This user first joined Sandhurst only ${accountCreateSandhurstJoinRelationDays} days after registering their account. \n`;
                             chronicle += dataFile.ChronicleWeights['Within30DaysJoinedBA'];
-                        }
+                        };
 
                         // text for displaying in embed
                         if (accountCreateSandhurstJoinRelationDays === 1) {
@@ -463,34 +466,33 @@ module.exports = {
                         } else {
                             let accountCreatedRelativeYears = (accountCreateSandhurstJoinRelationDays / 365).toFixed(2);
                             accountCreatedRelative = `${accountCreatedRelativeYears} years after registering their account.`;
-                        }
-
-                    }
+                        };
+                    };
 
                     // complete alerts and suspicions, finalise strings to display in embeds
                     sandhurstAlerts += `\n${sandhurstSuspicions}\n\`\`\``;
 
                     if (sandhurstAlerts.split("\n")[1].length === 0) {
                         sandhurstAlerts = '```diff\n+ No flags or suspicions\n```';
-                    }
+                    };
 
                     if (pastUsernamesAmount >= 1) {
                         let usernameRobuxChronicleReduction = 0.1
                         chronicle -= usernameRobuxChronicleReduction * pastUsernamesAmount
                         amendments += `+ ${totalRobuxSpentOnUsernames.toLocaleString()} Robux spent on username changes \n`
-                    }
+                    };
 
                     amendments += '\n```';
 
                     if (amendments.split("\n")[1].length === 0) {
                         amendments = '```diff\n# No amendments\n```';
-                    }
+                    };
 
                     alerts += `\n${suspicions}\n\`\`\``;
 
                     if (alerts.split("\n")[1].length === 0) {
                         alerts = '```diff\n+ No flags or suspicions\n```';
-                    }
+                    };
 
                     // establish alt rating
                     let probableChronicle = 10;
@@ -510,13 +512,13 @@ module.exports = {
                         altRating = 'Less Likely';
                     } else if (chronicle.toFixed(2) <= noneChronicle) {
                         altRating = 'Improbable';
-                    }
+                    };
 
                     // old bug that used to happen
-                    if (altRating.length === 0) {
+                    /*if (altRating.length === 0) {
                         let failedEmbed = new EmbedBuilder()
                             .setTitle('Error')
-                            .setDescription('Unable to establish an alt rating for this user. Chroncile count most likely in deadzone. \nChronicle score: '+chronicle.toFixed(2))
+                            .setDescription(`Unable to establish an alt rating for this user. Chroncile count most likely in deadzone. \nChronicle score: ${chronicle.toFixed(2)}`)
                             .setTimestamp()
 
                         await command_interaction.editReply({
@@ -524,7 +526,7 @@ module.exports = {
                         })
 
                         return;
-                    }
+                    }*/
 
                     // recommend higher accuracy if they have more badges or inventory items than get amount, can lead to finding more badges from badge walks
                     if ((accuracy === 'standard' || accuracy === 'high') && 
@@ -532,7 +534,7 @@ module.exports = {
                         inventoryAssets.length === inventoryItemsGetAmount || 
                         inventoryAssetsAccessories.length === inventoryItemsGetAmount)) {
                         recommendation = (accuracy === 'standard') ? 'High accuracy background check recommended due to incomplete data' : 'Extreme accuracy background check recommended due to incomplete data';
-                    }
+                    };
 
                     // final strings for embed
                     let accountInformationString = `User ID: \`${id}\` \nAccount Age: \`${accountAgeShow}\` \nAccounted Created: <t:${accountCreated}:f> \nBadge Count: \`${badgeCount}\` \nFriends: \`${info.friendCount}\` \nFollowing: \`${info.followingCount}\` \nPast Usernames: ${pastUsernames}`;
@@ -547,7 +549,7 @@ module.exports = {
                     let desc = `### Account Information \n${accountInformationString}\n### Account Background Check \n${alerts}\n### British Army Background Check \n${britishArmyBackgroundCheckString}\n### Amendments \n${amendmentsString}\n### Alt Probability: ${altRating} \n${altRatingString}`;
                     if (recommendation.includes('incomplete')) {
                         desc += `\n### ${recommendation}`;
-                    }
+                    };
 
                     let finalisedEmbed = new EmbedBuilder()
                         .setTitle(`${info.username} (${id})`)
@@ -555,18 +557,18 @@ module.exports = {
                         .setThumbnail(userThumbnail.imageUrl)
                         .setURL(`https://www.roblox.com/users/${id}/profile`)
                         .setDescription(desc)
-                        .setFooter({text: `Completed in ${totalTime} seconds, ${accuracy} accuracy`})
+                        .setFooter({text: `Completed in ${totalTime} seconds, ${accuracy} accuracy`});
                 
                     command_interaction.editReply({
                         embeds: [finalisedEmbed]
-                    })
+                    });
                 })
             } else {
                 setTimeout(() => {
                     command_interaction.editReply({
                         content: `No user by the name of ${target} was found. Did you provide a valid Roblox username?`,
                         embeds: []
-                    })
+                    });
 
                     return;
                 }, 1000);
@@ -575,13 +577,13 @@ module.exports = {
         }).catch(function(err) {
             setTimeout(() => {
                 command_interaction.editReply({
-                    content: 'An error checking `'+target+'` occured. Did you provide a valid Roblox username? \n \n`'+err+'`',
+                    content: `An error checking ${target} occured. \n${err}`,
                     embeds: []
-                })
+                });
+
                 console.log(err)
                 return;
             }, 1000);
-        })
-
+        });
     },
 };
