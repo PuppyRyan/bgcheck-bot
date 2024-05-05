@@ -22,14 +22,14 @@ module.exports = {
                     {name: 'standard', value: 'standard'},
                 ))
 
-        /*.addStringOption(option => 
+        .addStringOption(option => 
             option.setName('debug')
                 .setDescription('Enable debug')
                 .setRequired(false)
                 .addChoices(
                     {name: 'true', value: 'true'},
                     {name: 'false', value: 'false'},
-                ))*/,
+                )),
         
     async execute(command_interaction, client) {
 
@@ -37,7 +37,7 @@ module.exports = {
         let timeNowUnixRelative = `<t:${timeNow}:R>`;
 
         let target = command_interaction.options.getString('username');
-        //let debugMode = command_interaction.options.getString('debug');
+        let debugMode = command_interaction.options.getString('debug');
         let accuracy = command_interaction.options.getString('accuracy') || 'standard';
 
         let dumpChannel = await client.channels.cache.get('1216268106037592204')
@@ -69,8 +69,8 @@ module.exports = {
         }
 
         async function debug(givenMessage) {
-            /*if (debugMode == 'true') {
-                let debugMessage = await command_interaction.channel.send(`\`${timeNow}:\` ${givenMessage}`);
+            if (debugMode == 'true') {
+                let debugMessage = command_interaction.channel.send(`\`${timeNow}:\` ${givenMessage}`);
 
                 setTimeout(async () => {
                     try {
@@ -79,7 +79,7 @@ module.exports = {
                         return;
                     }
                 }, 30000);  
-            }*/
+            }
             return
         }
 
@@ -253,7 +253,7 @@ module.exports = {
                             let purchasedAccessories = totalAvatarItems - legitAccessories;
                             let itemDescription = purchasedAccessories === 1 ? 'accessory or clothing' : 'accessories and clothing';
                         
-                            alerts += `${alertPrefix} A majority of this user's accessories and clothing (${fakeItemsPercentage}%) are free from Roblox. Out of ${totalAvatarItems} ${itemDescription}, ${legitAccessories} are purchased and legitimate. \n`;
+                            alerts += `${alertPrefix} A majority of this user's accessories and clothing (${fakeItemsPercentage}%) are free from Roblox or obtained from an event. Out of ${totalAvatarItems} ${itemDescription}, ${legitAccessories} are purchased and legitimate. \n`;
                             chronicle += dataFile.ChronicleWeights['SpamAvatarItems'];
                         };
                         
