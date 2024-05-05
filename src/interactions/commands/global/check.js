@@ -529,12 +529,15 @@ module.exports = {
                     }*/
 
                     // recommend higher accuracy if they have more badges or inventory items than get amount, can lead to finding more badges from badge walks
-                    if ((accuracy === 'standard' || accuracy === 'high') && 
-                        (badges.length === badgeGetAmount || 
-                        inventoryAssets.length === inventoryItemsGetAmount || 
-                        inventoryAssetsAccessories.length === inventoryItemsGetAmount)) {
-                        recommendation = (accuracy === 'standard') ? 'High accuracy background check recommended due to incomplete data' : 'Extreme accuracy background check recommended due to incomplete data';
-                    };
+                    if (privateInventory == 'true') {
+                        if ((accuracy === 'standard' || accuracy === 'high') && (badges.length === badgeGetAmount)) {
+                            recommendation = (accuracy === 'standard') ? 'High accuracy background check recommended due to incomplete data' : 'Extreme accuracy background check recommended due to incomplete data';
+                        }
+                    } else { 
+                        if ((accuracy === 'standard' || accuracy === 'high') && (badges.length === badgeGetAmount || inventoryAssets.length === inventoryItemsGetAmount || inventoryAssetsAccessories.length === inventoryItemsGetAmount)) {
+                            recommendation = (accuracy === 'standard') ? 'High accuracy background check recommended due to incomplete data' : 'Extreme accuracy background check recommended due to incomplete data';
+                        }
+                    }
 
                     // final strings for embed
                     let accountInformationString = `User ID: \`${id}\` \nAccount Age: \`${accountAgeShow}\` \nAccounted Created: <t:${accountCreated}:f> \nBadge Count: \`${badgeCount}\` \nFriends: \`${info.friendCount}\` \nFollowing: \`${info.followingCount}\` \nPast Usernames: ${pastUsernames}`;
