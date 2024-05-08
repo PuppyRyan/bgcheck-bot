@@ -273,7 +273,7 @@ module.exports = {
                     let occurrenceResult = countOccurrences(numbers);
                                   
                     for (let [gameId, count] of Object.entries(occurrenceResult)) {
-                        if (count >= 50) {
+                        if (count >= 75) {
                             let gameName = await getGameName(gameId)
 
                             alerts += `${alertPrefix} This user has possibly done a badge walk, possessing ${count} badges from the game "${gameName}" \n`;
