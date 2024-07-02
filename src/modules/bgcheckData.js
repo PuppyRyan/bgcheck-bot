@@ -7,7 +7,7 @@ const ChronicleWeights = {
     ['Less60AccountAge']: 2,
     ['NoFriends']: 1.5,
     ['Less90AccountAge']: 2,
-    ['Less15ClothingItems']: 3.5,
+    ['Less15ClothingItems']: 1.5,
     ['Less5Groups']: 2.5,
     ['LessFriends']: 1,
     ['Less180AccountAge']: 1,
@@ -17,13 +17,18 @@ const ChronicleWeights = {
     ['NoLimiteds']: 0.2,
     ['Less5BadgePages']: 6,
     ['Less2BadgePages']: 8,
-    ['LessRecommenedPages']: 5,
+    ['LessRecommenedPages']: 4.5,
     ['Within30DaysJoinedBA']: 5,
     ['Within1DayJoinedBA']: 8,
-    ['SpamGroups']: 4,
+    ['SpamGroups']: 2.5,
     ['SpamAvatarItems']: 6,
     ['BadgeWalk']: 7,
+    ['ObbyBadges']: 3.5,
+    ['FakeBadgeMajority']: 7.5,
     ['NoBadges']: 10,
+    ['UnusualBadgeActivity']: 7,
+    ['Inactivity']: 6,
+    ['Inactivity3Months']: 2,
 }
 
 const Colours = {
@@ -208,6 +213,9 @@ const RobloxOwnedItems = [
     'Overdrive Goggles',
     'WWE',
     'John',
+    'Junkbot',
+    'Lin',
+    'WDW',
 ]
 
 module.exports = { ChronicleWeights, ExpectedFollowPresence, ExpectedPages, Colours, RobloxOwnedItems};
